@@ -19,7 +19,7 @@ class AccountDAO(Base):
     # status_id = Column(Integer, ForeignKey('status.id'))
     # https: // docs.sqlalchemy.org / en / 14 / orm / basic_relationships.html
     # https: // docs.sqlalchemy.org / en / 14 / orm / backref.html
-    status = relationship(StatusDAO.__name__, backref=backref("account", uselist=False))
+    # status = relationship(StatusDAO.__name__, backref=backref("account", uselist=False))
 
     def __init__(self, first_name, last_name, email_address, password, user_type, automatic_topup, amount_topup):
         self.first_name = first_name
