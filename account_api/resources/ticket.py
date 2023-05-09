@@ -22,6 +22,8 @@ class Ticket:
         session.close()
         return jsonify({'ticket_id': ticket.id}), 200
 
+    def update(body):
+
     # @staticmethod
     # def update(d_id, status):
     #     session = Session()

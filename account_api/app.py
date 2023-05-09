@@ -22,10 +22,11 @@ def get_account(a_id):
     return Account.get(a_id)
 
 
-# @app.route('/accounts/<d_id>/status', methods=['PUT'])
-# def update_delivery_status(d_id):
-#     status = request.args.get('status')
-#     return Status.update(d_id, status)
+@app.route('/accounts/<a_id>', methods=['PUT'])
+def update_account(a_id):
+    # status = request.args.get('status')
+    req_data = request.get_json()
+    return Account.update(a_id, req_data)
 
 
 @app.route('/accounts/<a_id>', methods=['DELETE'])

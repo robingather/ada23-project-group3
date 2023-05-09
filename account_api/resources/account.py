@@ -44,6 +44,16 @@ class Account:
             return jsonify({'message': f'There is no account with id {d_id}'}), 404
 
     @staticmethod
+    def update(a_id, body):
+        session = Session()
+        account = session.query(AccountDAO).filter(AccountDAO.id == d_id)[0]
+        
+        # delivery.status.status = status
+        # delivery.status.last_update = datetime.datetime.now()
+        session.commit()
+        return jsonify({'message': 'The delivery status was updated'}), 200
+
+    @staticmethod
     def delete(d_id):
         session = Session()
         effected_rows = session.query(AccountDAO).filter(AccountDAO.id == d_id).delete()
