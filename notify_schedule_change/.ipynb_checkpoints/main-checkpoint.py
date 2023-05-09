@@ -13,31 +13,11 @@ def notify_schedule_change(cloud_event):
   """Background Cloud Function to be triggered by Pub/Sub
   """
 
-  print(cloud_event)
   data = cloud_event.data
-
   event_id = cloud_event["id"]
   event_type = cloud_event["type"]
-
-  bucket_name = data["bucket"]
-  file_name = data["name"]
-  metageneration = data["metageneration"]
-  timeCreated = data["timeCreated"]
-  updated = data["updated"]
-
-  print(f"Event ID: {event_id}")
-  print(f"Event type: {event_type}")
-  print(f"Bucket: {bucket_name}")
-  print(f"File: {file_name}")
-  print(f"Metageneration: {metageneration}")
-  print(f"Created: {timeCreated}")
-  print(f"Updated: {updated}")
-
-  # data = cloud_event.data
-  # event_id = cloud_event["id"]
-  # event_type = cloud_event["type"]
-  # print('Event ID: {}'.format(event_id))
-  # print('Event type: {}'.format(event_type))
+  print('Event ID: {}'.format(event_id))
+  print('Event type: {}'.format(event_type))
 
   decodedStr = base64.b64decode(data["message"]["data"]).decode()
   print('Message data : {}'.format(decodedStr))
@@ -50,7 +30,6 @@ def notify_schedule_change(cloud_event):
 
   # Open a channel to read the file from GCS
   df_schedule = pd.read_json(json.dumps(schedule_input), orient='records')
-  df_delayed = df_schedule[df_schedule['status'].contains('delayed')]
 
   # Download schedule
   # client = storage.Client(project=project_id)
@@ -63,6 +42,32 @@ def notify_schedule_change(cloud_event):
   # print('Result : {}'.format(df_schedule))
 
   # Publish the result to the topic diabetes_req. Note, here, we assume the topic already exists.
-  data = {'result': df_delayed.json()}
+  data = {'result': str(status[0])}
   data = json.dumps(data).encode("utf-8")  # always need to send base64 binary data
-  publish_message(project=project_id, topic="schedule_notifications", message=data)
+  publish_message(project=project_id, topic="diabetes_res", message=data)
+
+  # Do clean up
+  os.remove(temp_model_filename)
+
+
+
+
+
+  request_json = request.get_json(silent=True)
+  request_args = request.args
+
+  if request_json and 'time' in request_json and 'distance' in request_json:
+    time = float(request_json['time'])
+    distance = request_json['distance']
+  elif request_args and 'time' in request_args and 'distance' in request_args:
+    time = float(request_args['time'])
+    distance = request_args['distance']
+  else:
+    time = 0.0
+    distance = 0.0
+
+  if(time > 7 and time < 9 or time > 16 and time < 19): # on-peak fare
+    return 'Total %.2f' % (distance*0.3 + 10)
+  else: # off-peak fare
+    return 'Total %.2f' % (distance*0.3)
+  # return 'Total {}!'.format(float(arg1) + float(arg2))
