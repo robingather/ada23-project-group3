@@ -8,7 +8,7 @@ import uuid
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-class Status:
+class Ticket:
     @staticmethod
     def create(body):
 
