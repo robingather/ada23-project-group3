@@ -1,6 +1,6 @@
 import datetime
 from flask import jsonify
-from daos.delivery_dao import DeliveryDAO
+from daos.account_dao import AccountDAO
 from db import Session
 import uuid
 

@@ -1,7 +1,6 @@
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, backref
 
-from daos.status_dao import StatusDAO
 from db import Base
 
 
