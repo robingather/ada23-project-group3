@@ -1,6 +1,6 @@
 import datetime
 from flask import jsonify
-from daos.account_dao import AccountDAO
+from daos.ticket_dao import TicketDAO
 from db import Session
 import uuid
 
@@ -23,6 +23,7 @@ class Ticket:
         return jsonify({'ticket_id': ticket.id}), 200
 
     def update(body):
+      pass
 
     # @staticmethod
     # def update(d_id, status):

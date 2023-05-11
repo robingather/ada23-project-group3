@@ -10,6 +10,10 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 Base.metadata.create_all(engine)
 
+@app.route('/tickets', methods=['POST'])
+def create_ticket():
+    req_data = request.get_json()
+    return Ticket.create(req_data)
 
 @app.route('/accounts', methods=['POST'])
 def create_account():

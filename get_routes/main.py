@@ -51,9 +51,9 @@ def get_routes(request):
   client = storage.Client(project=project_id)
   bucket = client.get_bucket(bucket_name)
   blob = bucket.blob('schedule_data.csv')
-  temp_model_filename = os.path.join('/tmp', 'schedule_data.csv')
-  blob.download_to_filename(temp_model_filename)
-  df_schedule = pd.read_csv(temp_model_filename)
+  temp_filename = os.path.join('/tmp', 'schedule_data.csv')
+  blob.download_to_filename(temp_filename)
+  df_schedule = pd.read_csv(temp_filename)
 
   # get arguments
   request_json = request.get_json(silent=True)
