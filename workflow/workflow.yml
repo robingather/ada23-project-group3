@@ -1,0 +1,34 @@
+# Order Approval Process
+main:
+  params: [args]
+  steps:
+    - checkAvailability:
+        call: http.post
+        args:
+          url: https://check-availability-zin5yibzhq-uc.a.run.app/
+          body:
+            route_id: ${args.route_id}
+            another_val: 123
+        result: GetAvailabilityResult
+        next: calcPrice
+    - calcPrice:
+        call: http.post
+        args:
+          url: https://calc-ticket-price-zin5yibzhq-uc.a.run.app
+          body:
+            route_id: ${args.route_id}
+            distance: 10
+            time: ${args.time}
+        result: GetPriceResult
+        next: createTicket
+    - createTicket:
+        call: http.post
+        args:
+          url: http://35.222.91.84:5000/tickets
+          body:
+            price: ${GetPriceResult.body}
+            account_eamil: ${args.account_email}
+        result: GetCreateTicketResult
+        next: returnOutput
+    - returnOutput:
+        return: ${GetCreateTicketResult.body}
