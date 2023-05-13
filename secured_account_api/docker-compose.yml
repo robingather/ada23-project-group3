@@ -1,6 +1,6 @@
 version: '3.9'
 services:  
-  userservice:
+  securedapi:
     build:
       context: .
     container_name: secure_api
