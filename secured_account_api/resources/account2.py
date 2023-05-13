@@ -13,6 +13,7 @@ class Account:
     def create(post_data):
         session = Session()
         # check if user already exists
+        print("hello")
         user = session.query(AccountDAO).filter(AccountDAO.id == post_data.get('email_address')).first()
         if not user:
             try:
