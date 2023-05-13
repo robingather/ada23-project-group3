@@ -1,57 +1,93 @@
-from datetime import datetime
+from flask import jsonify, make_response
 
-from flask import jsonify
-
-from constant import STATUS_CREATED
 from daos.account_dao import AccountDAO
-from daos.ticket_dao import TicketDAO
 from db import Session
+from jwtutil import encode_auth_token, decode_auth_token
 
+
+# see https://realpython.com/token-based-authentication-with-flask/
 
 class Account:
-    @staticmethod
-    def create(body):
-        session = Session()
-        account = AccountDAO(body['first_name'], body['last_name'], body['email_address'],
-          body['password'], body['user_type'], False, 0)
-        session.add(account)
-        session.commit()
-        session.refresh(account)
-        session.close()
-        return jsonify({'account_id': account.id}), 200
 
     @staticmethod
-    def get(d_id):
+    def create(post_data):
         session = Session()
-        # https://docs.sqlalchemy.org/en/14/orm/query.html
-        # https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
-        account = session.query(AccountDAO).filter(AccountDAO.id == d_id).first()
+        # check if user already exists
+        print("hello")
+        user = session.query(AccountDAO).filter(AccountDAO.id == post_data.get('email_address')).first()
+        if not user:
+            try:
+                user = AccountDAO(
+                    first_name=post_data.get('first_name'),
+                    last_name=post_data.get('last_name'),
+                    user_type=post_data.get('user_type'),
+                    automatic_topup= False,
+                    amount_topup = 0,
+                    email_address=post_data.get('email_address'),
+                    password=post_data.get('password')
+                )
 
-        if account:
-            text_out = {
-                "first_name:": account.first_name,
-                "last_name:": account.last_name,
-                "email_address:": account.email_address,
-                "password:": account.password,
-                "user_type:": account.user_type,
-                "automatic_topup:": account.automatic_topup,
-                "amount_topup:": account.amount_topup
-            }
-            session.close()
-            return jsonify(text_out), 200
+                # insert the user
+                session.add(user)
+                session.commit()
+                # generate the auth token
+                auth_token = encode_auth_token(user.id)
+                responseObject = {
+                    'status': 'success',
+                    'message': 'Successfully registered.',
+                    'auth_token': auth_token
+                }
+                session.close()
+                return make_response(jsonify(responseObject)), 200
+            except Exception as e:
+                print(e)
+                responseObject = {
+                    'status': 'fail',
+                    'message': 'Some error occurred. Please try again.'
+                }
+                return make_response(jsonify(responseObject)), 401
         else:
-            session.close()
-            return jsonify({'message': f'There is no account with id {d_id}'}), 404
+            responseObject = {
+                'status': 'fail',
+                'message': 'User already exists. Please Log in.',
+            }
+            return make_response(jsonify(responseObject)), 202
 
     @staticmethod
-    def update(a_id, body):
-        session = Session()
-        account = session.query(AccountDAO).filter(AccountDAO.id == d_id)[0]
-        
-        # delivery.status.status = status
-        # delivery.status.last_update = datetime.datetime.now()
-        session.commit()
-        return jsonify({'message': 'The delivery status was updated'}), 200
+    def get(auth_header):
+        if auth_header:
+            auth_token = auth_header.split(" ")[1]
+        else:
+            auth_token = ''
+        if auth_token:
+            resp = decode_auth_token(auth_token)
+            if not isinstance(resp, str):
+                session = Session()
+                # check if user already exists
+                user = session.query(AccountDAO).filter(AccountDAO.id == resp).first()
+                responseObject = {
+                    'status': 'success',
+                    'data': {
+                        'user_id': user.id,
+                        'email_address': user.email_address,
+                        'type':user.type,
+                        'first_name':user.first_name,
+                        'last_name':user.last_name
+                    }
+                }
+                session.close()
+                return make_response(jsonify(responseObject)), 200
+            responseObject = {
+                'status': 'fail',
+                'message': resp
+            }
+            return make_response(jsonify(responseObject)), 401
+        else:
+            responseObject = {
+                'status': 'fail',
+                'message': 'Provide a valid auth token.'
+            }
+            return make_response(jsonify(responseObject)), 401
 
     @staticmethod
     def delete(d_id):

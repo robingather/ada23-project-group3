@@ -6,11 +6,3 @@ services:
     container_name: secure_api
     ports:
       - "5000:5000"
-  # secure_deliveryservice:
-  #   build:
-  #     context: ./secure_deliveryservice
-  #   container_name: secure_deliveryservice_ct
-  #   environment:
-  #     - PYTHONUNBUFFERED=1
-  #   ports:
-  #     - "5001:5000"

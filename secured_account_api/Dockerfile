@@ -14,4 +14,4 @@ EXPOSE 5000
 ENV DB_URL  sqlite:///account.db
 ENV SECRET_KEY  key.txt
 # Run our App
-CMD ["python3","app2.py"]
+CMD ["python3","app.py"]
