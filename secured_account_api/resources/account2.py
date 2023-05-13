@@ -69,7 +69,7 @@ class Account:
                     'status': 'success',
                     'data': {
                         'user_id': user.id,
-                        'email': user.email,
+                        'email_address': user.email_address,
                         'type':user.type,
                         'first_name':user.first_name,
                         'last_name':user.last_name

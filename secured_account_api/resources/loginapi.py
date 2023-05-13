@@ -14,7 +14,7 @@ class LoginAPI:
             # fetch the user data
             session = Session()
             # check if user already exists
-            user = session.query(AccountDAO).filter(AccountDAO.email == post_data.get('email')).first()
+            user = session.query(AccountDAO).filter(AccountDAO.email_address == post_data.get('email_address')).first()
             session.close()
             if user:
                 auth_token = encode_auth_token(user.id)
