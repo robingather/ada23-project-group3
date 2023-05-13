@@ -4,7 +4,7 @@ from db import Base
 
 
 class TicketDAO(Base):
-    __tablename__ = 'ticket'
+    __tablename__ = 'tickets'
 
     id = Column(Integer, primary_key=True) # Auto generated primary key
     start_date = Column(DateTime)
@@ -13,7 +13,7 @@ class TicketDAO(Base):
     status = Column(String)
     price = Column(Float)
     code = Column(String)
-    account_email = Column(Integer, ForeignKey('account.email_address'))
+    account_email = Column(Integer, ForeignKey('accounts.email_address'))
 
     def __init__(self, start_date, purchase_date, end_date, status, price, code, account_email):
         self.start_date = start_date
