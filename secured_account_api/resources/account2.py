@@ -19,7 +19,7 @@ class Account:
                 user = AccountDAO(
                     first_name=post_data.get('first_name'),
                     last_name=post_data.get('last_name'),
-                    user_type="customer",
+                    user_type=post_data.get('user_type'),
                     automatic_topup= False,
                     amount_topup = 0,
                     email_address=post_data.get('email_address'),
