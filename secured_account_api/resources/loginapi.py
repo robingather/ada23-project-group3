@@ -1,6 +1,6 @@
 from flask import make_response, jsonify
 
-from daos.user_dao import UserDAO
+from daos.account_dao import AccountDAO
 from db import Session
 # see https://realpython.com/token-based-authentication-with-flask/
 from jwtutil import encode_auth_token
@@ -14,7 +14,7 @@ class LoginAPI:
             # fetch the user data
             session = Session()
             # check if user already exists
-            user = session.query(UserDAO).filter(UserDAO.email == post_data.get('email')).first()
+            user = session.query(AccountDAO).filter(AccountDAO.email == post_data.get('email')).first()
             session.close()
             if user:
                 auth_token = encode_auth_token(user.id)

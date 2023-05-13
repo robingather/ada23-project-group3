@@ -7,7 +7,7 @@ from jwtutil import encode_auth_token, decode_auth_token
 
 # see https://realpython.com/token-based-authentication-with-flask/
 
-class User:
+class Account:
 
     @staticmethod
     def create(post_data):
