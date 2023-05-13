@@ -6,7 +6,7 @@ from db import Base
 
 class AccountDAO(Base):
     __tablename__ = 'accounts'
-    id = Column(Integer, primary_key=True)  # Auto generated primary key
+    id = Column(Integer, primary_key=True, autoincrement=True)  # Auto generated primary key
     first_name = Column(String)
     last_name = Column(String)
     email_address = Column(String, unique=True, nullable=False)
