@@ -38,9 +38,13 @@ def check_if_authorize(req):
                           headers={'Content-Type': 'application/json',
                                   'Authorization': auth_header})
   status_code = result.status_code
+  
   print(status_code)
   print(result.json())
-  return status_code
+  if(result.data):
+    return status_code, result.data
+  else:
+    return status_code, None
 
 # Account end-points
 # @app.route('/accounts/<a_id>', methods=['GET'])
@@ -54,7 +58,8 @@ def check_if_authorize(req):
 # Ticket end-points
 @app.route('/tickets', methods=['POST'])
 def create_ticket():
-  if check_if_authorize(request) == 200:
+  status_code, _ = check_if_authorize(request)
+  if status_code == 200:
     req_data = request.get_json()
     return Ticket.create(req_data)
   else:
@@ -66,9 +71,10 @@ def create_ticket():
 
 @app.route('/ticketlist', methods=['POST'])
 def get_tickets():
-  if check_if_authorize(request) == 200:
+  status_code, data = check_if_authorize(request)
+  if status_code == 200:
     req_data = request.get_json()
-    return Ticket.getAll(req_data)
+    return Ticket.getAll(data)
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)

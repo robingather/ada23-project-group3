@@ -25,7 +25,9 @@ def get_routes(request):
 
   # functions to process schedule
   def get_schedule(df, begin_time, start_loc, end_loc):
-    df_selected_schedule = pd.DataFrame({'start_time': pd.Series(dtype='str'),
+    df_selected_schedule = pd.DataFrame({
+                              'route_id': pd.Series(dtype='str'),
+                              'start_time': pd.Series(dtype='str'),
                               'end_time': pd.Series(dtype='str'),
                               'start_station': pd.Series(dtype='str'),
                               'end_station': pd.Series(dtype='str'),
@@ -38,7 +40,7 @@ def get_routes(request):
         start_time = row_start_time[0]
         
         if int(start_time) >= int(begin_time) and row['start_station'] == start_loc and row['end_station'] == end_loc:
-            new_row = {'start_time':row['start_time'], 'end_time':row['end_time'], 'start_station':row['start_station'], 'end_station':row['end_station'], 'total_duration': row['total_duration']}
+            new_row = {'route_id':row['route_id'], 'start_time':row['start_time'], 'end_time':row['end_time'], 'start_station':row['start_station'], 'end_station':row['end_station'], 'total_duration': row['total_duration']}
             # df_selected_schedule = df_selected_schedule.append(new_row, ignore_index=True)
             # df_selected_schedule = pd.concat([df_selected_schedule, new_row], axis=0)
             df_selected_schedule.loc[len(df_selected_schedule)] = new_row
@@ -74,7 +76,7 @@ def get_routes(request):
 
   # process schedule
   df_routes = get_schedule(df_schedule, start_time, start_station, end_station)
-  return df_routes.to_json()
+  return df_routes.to_json(orient='index')
 
   df_schedule[df_schedule['start_time'] > departure_time]
 
