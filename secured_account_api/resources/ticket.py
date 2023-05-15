@@ -30,7 +30,13 @@ class Ticket:
         response = {}
         for ticket in tickets:
           response[ticket.id] = {
-              "route_id:": ticket.route_id
+              "route_id:": ticket.route_id,
+              "start_date" : ticket.start_date,
+              "purchase_date" : ticket.purchase_date,
+              "end_date" : ticket.end_date,
+              "status" : ticket.status,
+              "price" : ticket.price,
+              "code" : ticket.code
           }
         session.close()
         return jsonify(response), 200
