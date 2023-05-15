@@ -7,6 +7,7 @@ class TicketDAO(Base):
     __tablename__ = 'tickets'
 
     id = Column(Integer, primary_key=True) # Auto generated primary key
+    route_id = Column(String)
     start_date = Column(DateTime)
     purchase_date = Column(DateTime)
     end_date = Column(DateTime)
@@ -15,7 +16,8 @@ class TicketDAO(Base):
     code = Column(String)
     account_email = Column(Integer, ForeignKey('accounts.email_address'))
 
-    def __init__(self, start_date, purchase_date, end_date, status, price, code, account_email):
+    def __init__(self, route_id, start_date, purchase_date, end_date, status, price, code, account_email):
+        self.route_id = route_id
         self.start_date = start_date
         self.purchase_date = purchase_date
         self.end_date = end_date

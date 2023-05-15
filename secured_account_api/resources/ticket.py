@@ -14,7 +14,7 @@ class Ticket:
 
         # new_time = (datetime.now() + relativedelta(days=5)).strftime('%d/%m/%Y %H:%M:%S')
         session = Session()
-        ticket = TicketDAO(datetime.now(), datetime.now(), (datetime.now() + relativedelta(days=7)),
+        ticket = TicketDAO(body['route_id'], datetime.now(), datetime.now(), (datetime.now() + relativedelta(days=7)),
         "valid", body['price'], str(uuid.uuid4()), body['account_email'])
         session.add(ticket)
         session.commit()
@@ -22,8 +22,20 @@ class Ticket:
         session.close()
         return jsonify({'ticket_id': ticket.id}), 200
 
-    def update(body):
-      pass
+    def getAll(body):
+      session = Session()
+      tickets = session.query(TicketDAO).filter(TicketDAO.account_email == body['email_address'])
+      if tickets:
+        response = {}
+        for ticket in tickets:
+          response[ticket.id] = {
+              "route_id:": ticket.route_id
+          }
+        session.close()
+        return jsonify(response), 200
+      else:
+          session.close()
+          return jsonify({'message': 'There are no tickets for account with email %s' % body['email_address']}), 404
 
     # @staticmethod
     # def update(d_id, status):

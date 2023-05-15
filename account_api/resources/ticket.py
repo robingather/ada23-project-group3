@@ -12,7 +12,6 @@ class Ticket:
     @staticmethod
     def create(body):
 
-        # new_time = (datetime.now() + relativedelta(days=5)).strftime('%d/%m/%Y %H:%M:%S')
         session = Session()
         ticket = TicketDAO(datetime.now(), datetime.now(), (datetime.now() + relativedelta(days=7)),
         "valid", body['price'], str(uuid.uuid4()), body['account_email'])

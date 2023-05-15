@@ -28,14 +28,28 @@ def verify():
     auth_header = request.headers.get('Authorization')
     return Account.get(auth_header)
 
-# Account end-points
-@app.route('/accounts/<a_id>', methods=['GET'])
-def get_account(a_id):
-    return Account.get(a_id)
+def check_if_authorize(req):
+  auth_header = req.headers['Authorization']
+  if 'AUTH_URL' in os.environ:
+      auth_url = os.environ['AUTH_URL']
+  else:
+      auth_url = 'http://secure_api:5000/verify'
+  result = requests.post(auth_url,
+                          headers={'Content-Type': 'application/json',
+                                  'Authorization': auth_header})
+  status_code = result.status_code
+  print(status_code)
+  print(result.json())
+  return status_code
 
-@app.route('/accounts/<a_id>', methods=['DELETE'])
-def delete_account(a_id):
-    return Account.delete(a_id)
+# Account end-points
+# @app.route('/accounts/<a_id>', methods=['GET'])
+# def get_account(a_id):
+#     return Account.get(a_id)
+
+# @app.route('/accounts/<a_id>', methods=['DELETE'])
+# def delete_account(a_id):
+#     return Account.delete(a_id)
 
 # Ticket end-points
 @app.route('/tickets', methods=['POST'])
@@ -50,19 +64,11 @@ def create_ticket():
     }
     return make_response(jsonify(responseObject)), 401
 
-def check_if_authorize(req):
-    auth_header = req.headers['Authorization']
-    if 'AUTH_URL' in os.environ:
-        auth_url = os.environ['AUTH_URL']
-    else:
-        auth_url = 'http://secure_api:5000/verify'
-    result = requests.post(auth_url,
-                           headers={'Content-Type': 'application/json',
-                                    'Authorization': auth_header})
-    status_code = result.status_code
-    print(status_code)
-    print(result.json())
-    return status_code
+@app.route('/ticketlist', methods=['POST'])
+def create_ticket():
+  if check_if_authorize(request) == 200:
+    req_data = request.get_json()
+    return Ticket.getAll(req_data)
 
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
