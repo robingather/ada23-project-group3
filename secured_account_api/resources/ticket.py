@@ -10,12 +10,12 @@ from dateutil.relativedelta import relativedelta
 
 class Ticket:
     @staticmethod
-    def create(body):
+    def create(body, auth):
 
         # new_time = (datetime.now() + relativedelta(days=5)).strftime('%d/%m/%Y %H:%M:%S')
         session = Session()
         ticket = TicketDAO(body['route_id'], datetime.now(), datetime.now(), (datetime.now() + relativedelta(days=7)),
-        "valid", body['price'], str(uuid.uuid4()), body['account_email'])
+        "valid", body['price'], str(uuid.uuid4()), auth['email_address'])
         session.add(ticket)
         session.commit()
         session.refresh(ticket)

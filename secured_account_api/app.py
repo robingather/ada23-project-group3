@@ -59,10 +59,10 @@ def check_if_authorize(req):
 # Ticket end-points
 @app.route('/tickets', methods=['POST'])
 def create_ticket():
-  status_code, _ = check_if_authorize(request)
+  status_code, data = check_if_authorize(request)
   if status_code == 200:
     req_data = request.get_json()
-    return Ticket.create(req_data)
+    return Ticket.create(req_data, auth_data)
   else:
     responseObject = {
         'status': 'fail',
