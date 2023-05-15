@@ -24,6 +24,7 @@ class Ticket:
 
     def getAll(body):
       session = Session()
+      print(body, body['email_address'])
       tickets = session.query(TicketDAO).filter(TicketDAO.account_email == body['email_address'])
       if tickets:
         response = {}
