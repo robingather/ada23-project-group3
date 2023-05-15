@@ -22,7 +22,7 @@ def login():
     req_data = request.get_json()
     return LoginAPI.login(req_data)
 
-@app.route('/verify', methods=['POST'])
+@app.route('/verify', methods=['GET'])
 def verify():
     # get the auth token
     auth_header = request.headers.get('Authorization')
