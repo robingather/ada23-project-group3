@@ -38,10 +38,11 @@ def check_if_authorize(req):
                           headers={'Content-Type': 'application/json',
                                   'Authorization': auth_header})
   status_code = result.status_code
-  
+  data = result.data if 'data' in result.keys() else None
+
   print(status_code)
   print(result.json())
-  return status_code, result.data if result.data else None
+  return status_code, data
 
 # Account end-points
 # @app.route('/accounts/<a_id>', methods=['GET'])
