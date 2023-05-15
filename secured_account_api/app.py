@@ -62,7 +62,7 @@ def create_ticket():
   status_code, data = check_if_authorize(request)
   if status_code == 200:
     req_data = request.get_json()
-    return Ticket.create(req_data, auth_data)
+    return Ticket.create(req_data, data)
   else:
     responseObject = {
         'status': 'fail',
