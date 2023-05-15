@@ -65,7 +65,7 @@ def create_ticket():
     return make_response(jsonify(responseObject)), 401
 
 @app.route('/ticketlist', methods=['POST'])
-def create_ticket():
+def get_tickets():
   if check_if_authorize(request) == 200:
     req_data = request.get_json()
     return Ticket.getAll(req_data)
