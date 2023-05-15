@@ -23,8 +23,8 @@ Login with email and password of existing user. You will receive a JWT authentic
 - type: POST
 - url: http:{VM_ID}:5000/login
 - body: {
-	"email_address": "peter@gmail.com",
-	"password": "goldband123"
+	"email_address": "j.johnson@gmail.com",
+	"password": "password123"
 }
 - returns auth token for that user
 
