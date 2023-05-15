@@ -37,9 +37,10 @@ def check_if_authorize(req):
   result = requests.post(auth_url,
                           headers={'Content-Type': 'application/json',
                                   'Authorization': auth_header})
-  print(result.json())
+  print("RES",result)
+  print("RES2",result.json())
   status_code = result.status_code
-  print(status_code)
+  print("status",status_code)
 
   data = result.json().data if 'data' in result.json().keys() else None
 
