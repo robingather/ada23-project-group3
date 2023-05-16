@@ -37,4 +37,4 @@ def check_availability(request):
   print("route_id",route_id)
   print("seat_availability", df_schedule[df_schedule['route_id']==route_id]['seat_availability'])
 
-  return {"result:":str(df_schedule[df_schedule['route_id']==route_id]['seat_availability'].item())}
+  return {"result":df_schedule[df_schedule['route_id']==route_id]['seat_availability'].item()}
