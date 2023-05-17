@@ -92,16 +92,15 @@ class Account:
     @staticmethod
     def delete(data):
       session = Session()
-      user = session.query(AccountDAO).filter(AccountDAO.email_address == data.get('email_address')).first()
+      user = session.query(AccountDAO).filter(AccountDAO.email_address == data.get('email_address')).delete()
       if(user):
         try:
-          user.delete()
           session.commit()
-          session.close()
           responseObject = {
-              'status': 'success',
-              'message': 'deleted user with email %s' % data.get('email_address')
+            'status': 'success',
+            'message': 'deleted user with email %s' % data.get('email_address')
           }
+          session.close()
           return make_response(jsonify(responseObject)), 200
         except Exception as e:
           print(e)
