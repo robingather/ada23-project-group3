@@ -40,7 +40,7 @@ def check_if_authorize(req):
   # print("RES",result)
   # print("RES2",result.json())
   status_code = result.status_code
-  # print("status",status_code)
+  print("status",status_code)
   try:
     data = result.json()['data'] if 'data' in result.json().keys() else None
     return status_code, data
@@ -76,13 +76,25 @@ def get_tickets():
   if status_code == 200:
     # req_data = request.get_json()
     return Ticket.getAll(data)
+  else:
+    responseObject = {
+        'status': 'fail',
+        'message': 'Try again'
+    }
+    return make_response(jsonify(responseObject)), 401
 
 @app.route('/accounts',methods=['DELETE'])
 def delete_account():
   status_code, data = check_if_authorize(request)
   if status_code == 200:
     return Account.delete(data)
-
+  else:
+    responseObject = {
+        'status': 'fail',
+        'message': 'Try again'
+    }
+    return make_response(jsonify(responseObject)), 401
+    
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
 
