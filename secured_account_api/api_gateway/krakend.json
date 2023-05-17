@@ -6,7 +6,7 @@
   "port": 8081,
   "endpoints": [
     {
-      "endpoint": "/tickets",
+      "endpoint": "/account_tickets",
       "method": "GET",
       "output_encoding": "json",
       "input_headers": [
