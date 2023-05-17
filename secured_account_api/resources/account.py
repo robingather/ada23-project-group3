@@ -90,12 +90,29 @@ class Account:
             return make_response(jsonify(responseObject)), 401
 
     @staticmethod
-    def delete(d_id):
-        session = Session()
-        effected_rows = session.query(AccountDAO).filter(AccountDAO.id == d_id).delete()
-        session.commit()
-        session.close()
-        if effected_rows == 0:
-            return jsonify({'message': f'There is no account with id {d_id}'}), 404
-        else:
-            return jsonify({'message': 'The account was removed'}), 200
+    def delete(data):
+      session = Session()
+      user = session.query(AccountDAO).filter(AccountDAO.id == data.get('email_address')).first()
+      if(user):
+        try:
+          user.delete()
+          session.commit()
+          session.close()
+          responseObject = {
+              'status': 'success',
+              'message': 'deleted user with email %s' % data.get('email_address')
+          }
+          return make_response(jsonify(responseObject)), 200
+        except Exception as e:
+          print(e)
+          responseObject = {
+              'status': 'fail',
+              'message': 'Some error occurred. Please try again.'
+          }
+          return make_response(jsonify(responseObject)), 401
+      else:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Provide a valid auth token or account doesn\'t exist.'
+        }
+        return make_response(jsonify(responseObject)), 401

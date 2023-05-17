@@ -80,6 +80,13 @@ def get_tickets():
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
 
+@app.route('/account',methods=['DELETE'])
+def delete_account():
+  status_code, data = check_if_authorize(request)
+  if status_code == 200:
+    return Account.delete(data)
 
-# TODO auth tickets
-# TODO get tickets
+
+# TODO update account
+# TODO update ticket
+# TODO delete account
