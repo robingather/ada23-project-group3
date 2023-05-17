@@ -96,9 +96,7 @@ def delete_account():
     }
     return make_response(jsonify(responseObject)), 401
 
-if __name__ == '__main__':
-    app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
-
+# update account
 @app.route('/accounts', methods=['PUT'])
 def update_account():
   status_code, _ = check_if_authorize(request)
@@ -112,5 +110,8 @@ def update_account():
     }
     return make_response(jsonify(responseObject)), 401
 
-# TODO update account
+if __name__ == '__main__':
+    app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
+
+
 # TODO update ticket
