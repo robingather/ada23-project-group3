@@ -119,17 +119,17 @@ class Account:
     @staticmethod
     def update(req_data):
         session = Session()
-        account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.email_address)[0]
+        account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.get("email_address"))[0]
         if(req_data.first_name):
-          account.first_name = req_data.first_name
+          account.first_name = req_data.get("first_name")
         if(req_data.last_name):
-          account.last_name = req_data.last_name
+          account.last_name = req_data.get("last_name")
         if(req_data.first_name):
-          account.first_name = req_data.first_name
+          account.first_name = req_data.get("first_name")
         if(req_data.user_type):
-          account.user_type = req_data.user_type
+          account.user_type = req_data.get("user_type")
         if(req_data.password):
-          account.password = req_data.password
+          account.password = req_data.get("password")
         session.commit()
         responseObject = {
             'status': 'success',
