@@ -31,17 +31,6 @@
             "http://secure_api:5000/"
           ]
           
-        },
-        {
-          "url_pattern": "/verify",
-          "encoding": "json",
-          "method": "GET",
-          "host": [
-            "http://secure_api:5000/"
-          ],
-          "mapping": {
-            "data": "account"
-          }
         }
       ]
       
