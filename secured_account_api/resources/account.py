@@ -119,7 +119,7 @@ class Account:
     @staticmethod
     def update(req_data):
         session = Session()
-        account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.get("email_address"))[0]
+        account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.get("email_address")).first()
         if(req_data.first_name):
           account.first_name = req_data.get("first_name")
         if(req_data.last_name):
