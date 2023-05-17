@@ -10,6 +10,6 @@ To use the function:
 - type: POST
 - url: use the url in Google Cloud Run
 - body: {
-	"time":8,
-  "distance":30
+	"route_id": "4c593a93-5e0f-4b93-b266-a5716b07acb2",
+  "time": 8
 }
