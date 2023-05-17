@@ -92,7 +92,7 @@ class Account:
     @staticmethod
     def delete(data):
       session = Session()
-      user = session.query(AccountDAO).filter(AccountDAO.id == data.get('email_address')).first()
+      user = session.query(AccountDAO).filter(AccountDAO.email == data.get('email_address')).first()
       if(user):
         try:
           user.delete()
