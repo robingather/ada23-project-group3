@@ -8,6 +8,7 @@
     {
       "endpoint": "/account_tickets",
       "method": "GET",
+      "timeout": "800ms",
       "output_encoding": "json",
       "input_headers": [
         "Authorization"
