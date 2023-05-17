@@ -99,10 +99,10 @@ def delete_account():
 # update account
 @app.route('/accounts', methods=['PUT'])
 def update_account():
-  status_code, _ = check_if_authorize(request)
+  status_code, auth_data = check_if_authorize(request)
   if status_code == 200:
     req_data = request.get_json()
-    return Account.update(req_data)
+    return Account.update(req_data, auth_data)
   else:
     responseObject = {
         'status': 'fail',

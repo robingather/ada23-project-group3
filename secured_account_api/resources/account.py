@@ -117,9 +117,9 @@ class Account:
         return make_response(jsonify(responseObject)), 401
 
     @staticmethod
-    def update(req_data):
+    def update(req_data, auth_data):
         session = Session()
-        account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.get("email_address")).first()
+        account = session.query(AccountDAO).filter(AccountDAO.email_address == auth_data.get("email_address")).first()
         if(req_data.get("first_name")):
           account.first_name = req_data.get("first_name")
         if(req_data.get("last_name")):
