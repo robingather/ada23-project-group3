@@ -13,9 +13,6 @@
         "Authorization"
       ],
       "extra_config": {
-        "proxy": {
-          "sequential": true
-        },
         "qos/ratelimit/router": {
           "max_rate": 3,
           "client_max_rate": 0,
@@ -25,7 +22,15 @@
         }
       },
       "backend": [
-
+        {
+          "url_pattern": "/tickets",
+          "encoding": "json",
+          "method": "GET",
+          "host": [
+            "http://secure_api:5000/"
+          ],
+          "disable_host_sanitize": false
+        },
         {
           "url_pattern": "/verify",
           "encoding": "json",
