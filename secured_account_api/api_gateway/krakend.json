@@ -9,6 +9,9 @@
       "endpoint": "/tickets",
       "method": "GET",
       "output_encoding": "json",
+      "input_headers": [
+        "Authorization"
+        ],
       "backend": [
         {
           "url_pattern": "/tickets",
