@@ -25,15 +25,7 @@
         }
       },
       "backend": [
-        {
-          "url_pattern": "/tickets",
-          "encoding": "json",
-          "method": "GET",
-          "host": [
-            "http://secure_api:5000/"
-          ],
-          "disable_host_sanitize": false
-        },
+
         {
           "url_pattern": "/verify",
           "encoding": "json",
