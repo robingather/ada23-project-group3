@@ -1,0 +1,25 @@
+{
+  "$schema": "http://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "output_encoding": "json",
+  "name": "2929_API",
+  "port": 8081,
+  "endpoints": [
+    {
+      "endpoint": "/tickets",
+      "method": "GET",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "url_pattern": "/tickets",
+          "encoding": "json",
+          "method": "GET",
+          "host": [
+            "http://secured_api:5000"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    }
+  ]
+}

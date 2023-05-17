@@ -6,3 +6,12 @@ services:
     container_name: secure_api
     ports:
       - "5000:5000"
+  api_gatway:
+    image: devopsfaith/krakend:2.2.0
+    container_name: api_gatway_ct
+    volumes:
+      - ./api_gateway:/etc/krakend/
+    depends_on:
+      - securedapi
+    ports:
+      - "8080:8081"

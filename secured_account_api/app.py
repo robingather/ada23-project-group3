@@ -70,7 +70,7 @@ def create_ticket():
     }
     return make_response(jsonify(responseObject)), 401
 
-@app.route('/ticketlist', methods=['GET'])
+@app.route('/tickets', methods=['GET'])
 def get_tickets():
   status_code, data = check_if_authorize(request)
   if status_code == 200:
