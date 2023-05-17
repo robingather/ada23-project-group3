@@ -5,16 +5,22 @@ main:
     - checkAvailability:
         call: http.post
         args:
-          url: https://check-availability-zin5yibzhq-uc.a.run.app/
+          url: https://check-availability-vyyo777p6q-uc.a.run.app
           body:
             route_id: ${args.route_id}
             another_val: 123
         result: GetAvailabilityResult
+    - conditionalOnSeatAvailability:
+        switch:
+        - condition: ${GetAvailabilityResult.body < 0}
+          steps:
+            - rejectOrder:
+                return: ${"Sorry, there are no seats available and you can therefore not buy a ticket.}
         next: calcPrice
     - calcPrice:
         call: http.post
         args:
-          url: https://calc-ticket-price-zin5yibzhq-uc.a.run.app
+          url: https://calc-ticket-price-vyyo777p6q-uc.a.run.app
           body:
             route_id: ${args.route_id}
             distance: 10
