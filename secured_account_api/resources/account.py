@@ -120,15 +120,15 @@ class Account:
     def update(req_data):
         session = Session()
         account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.get("email_address")).first()
-        if(req_data.first_name):
+        if(req_data.get("first_name")):
           account.first_name = req_data.get("first_name")
-        if(req_data.last_name):
+        if(req_data.get("last_name")):
           account.last_name = req_data.get("last_name")
-        if(req_data.first_name):
-          account.first_name = req_data.get("first_name")
-        if(req_data.user_type):
+        if(req_data.get("email_address")):
+          account.first_name = req_data.get("email_address")
+        if(req_data.get("user_type")):
           account.user_type = req_data.get("user_type")
-        if(req_data.password):
+        if(req_data.get("password")):
           account.password = req_data.get("password")
         session.commit()
         responseObject = {
