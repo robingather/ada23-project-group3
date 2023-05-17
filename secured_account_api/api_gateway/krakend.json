@@ -15,7 +15,7 @@
           "encoding": "json",
           "method": "GET",
           "host": [
-            "http://secured_api:5000"
+            "http://secured_api:5000/"
           ],
           "disable_host_sanitize": false
         }
