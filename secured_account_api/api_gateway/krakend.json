@@ -11,10 +11,24 @@
       "output_encoding": "json",
       "input_headers": [
         "Authorization"
-        ],
+      ],
+      "extra_config": {
+        "proxy": {
+          "sequential": true
+        }
+      },
       "backend": [
         {
           "url_pattern": "/tickets",
+          "encoding": "json",
+          "method": "GET",
+          "host": [
+            "http://secure_api:5000/"
+          ],
+          "disable_host_sanitize": false
+        },
+        {
+          "url_pattern": "/accounts",
           "encoding": "json",
           "method": "GET",
           "host": [
