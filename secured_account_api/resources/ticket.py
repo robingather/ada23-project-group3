@@ -1,5 +1,5 @@
 import datetime
-from flask import jsonify
+from flask import jsonify, make_response
 from daos.ticket_dao import TicketDAO
 from db import Session
 import uuid
@@ -43,6 +43,33 @@ class Ticket:
       else:
           session.close()
           return jsonify({'message': 'There are no tickets for account with email %s' % body['email_address']}), 404
+
+    @staticmethod
+    def delete(t_id, auth_data):
+      session = Session()
+      ticket = session.query(TicketDAO).filter(TicketDAO.id == t_id).delete()
+      if(ticket):
+        try:
+          session.commit()
+          responseObject = {
+            'status': 'success',
+            'message': 'deleted ticket with id %s for account %s' % (t_id, auth_data.get("email_address"))
+          }
+          session.close()
+          return make_response(jsonify(responseObject)), 200
+        except Exception as e:
+          print(e)
+          responseObject = {
+              'status': 'fail',
+              'message': 'Some error occurred. Please try again.'
+          }
+          return make_response(jsonify(responseObject)), 401
+      else:
+        responseObject = {
+            'status': 'fail',
+            'message': ('ticket with id %s doesn\'t exist.' % t_id)
+        }
+        return make_response(jsonify(responseObject)), 401
 
     # @staticmethod
     # def update(d_id, status):

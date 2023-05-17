@@ -110,6 +110,18 @@ def update_account():
     }
     return make_response(jsonify(responseObject)), 401
 
+@app.route('/accounts/<t_id>',methods=['DELETE'])
+def delete_account(t_id):
+  status_code, data = check_if_authorize(request)
+  if status_code == 200:
+    return Account.delete(t_id, data)
+  else:
+    responseObject = {
+        'status': 'fail',
+        'message': 'Try again'
+    }
+    return make_response(jsonify(responseObject)), 401
+
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
 

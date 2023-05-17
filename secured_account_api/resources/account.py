@@ -112,7 +112,7 @@ class Account:
       else:
         responseObject = {
             'status': 'fail',
-            'message': ('Provide a valid auth token or account with %s doesn\'t exist.' % data.get('email_address'))
+            'message': ('account with %s doesn\'t exist.' % data.get('email_address'))
         }
         return make_response(jsonify(responseObject)), 401
 
