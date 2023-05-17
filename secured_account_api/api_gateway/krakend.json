@@ -30,6 +30,7 @@
           "host": [
             "http://secure_api:5000/"
           ]
+          
         },
         {
           "url_pattern": "/verify",
@@ -37,7 +38,10 @@
           "method": "GET",
           "host": [
             "http://secure_api:5000/"
-          ]
+          ],
+          "mapping": {
+            "data": "account"
+          }
         }
       ]
       
