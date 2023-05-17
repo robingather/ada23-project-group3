@@ -28,8 +28,7 @@
           "method": "GET",
           "host": [
             "http://secure_api:5000/"
-          ],
-          "disable_host_sanitize": false
+          ]
         },
         {
           "url_pattern": "/verify",
@@ -37,8 +36,7 @@
           "method": "GET",
           "host": [
             "http://secure_api:5000/"
-          ],
-          "disable_host_sanitize": false
+          ]
         }
       ]
       
