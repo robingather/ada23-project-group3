@@ -115,3 +115,30 @@ class Account:
             'message': ('Provide a valid auth token or account with %s doesn\'t exist.' % data.get('email_address'))
         }
         return make_response(jsonify(responseObject)), 401
+
+    @staticmethod
+    def update(req_data):
+        session = Session()
+        account = session.query(AccountDAO).filter(AccountDAO.email_address == req_data.email_address)[0]
+        if(req_data.first_name):
+          account.first_name = req_data.first_name
+        if(req_data.last_name):
+          account.last_name = req_data.last_name
+        if(req_data.first_name):
+          account.first_name = req_data.first_name
+        if(req_data.user_type):
+          account.user_type = req_data.user_type
+        if(req_data.password):
+          account.password = req_data.password
+        session.commit()
+        responseObject = {
+            'status': 'success',
+            'data': {
+                'user_id': account.id,
+                'email_address': account.email_address,
+                'user_type':account.user_type,
+                'first_name':account.first_name,
+                'last_name':account.last_name
+            }
+        }
+        return make_response(jsonify(responseObject)), 200

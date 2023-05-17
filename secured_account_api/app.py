@@ -83,6 +83,7 @@ def get_tickets():
     }
     return make_response(jsonify(responseObject)), 401
 
+# delete account
 @app.route('/accounts',methods=['DELETE'])
 def delete_account():
   status_code, data = check_if_authorize(request)
@@ -98,7 +99,18 @@ def delete_account():
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
 
+@app.route('/accounts', methods=['PUT'])
+def update_account():
+  status_code, _ = check_if_authorize(request)
+  if status_code == 200:
+    req_data = request.get_json()
+    return Account.update(req_data)
+  else:
+    responseObject = {
+        'status': 'fail',
+        'message': 'Try again'
+    }
+    return make_response(jsonify(responseObject)), 401
 
 # TODO update account
 # TODO update ticket
-# TODO delete account
