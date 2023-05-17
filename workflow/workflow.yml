@@ -8,14 +8,13 @@ main:
           url: https://check-availability-vyyo777p6q-uc.a.run.app
           body:
             route_id: ${args.route_id}
-            another_val: 123
         result: GetAvailabilityResult
     - conditionalOnSeatAvailability:
         switch:
-        - condition: ${GetAvailabilityResult.body < 0}
+        - condition: ${GetAvailabilityResult.body.result <= 0}
           steps:
             - rejectOrder:
-                return: ${"Sorry, there are no seats available and you can therefore not buy a ticket.}
+                return: ${"Sorry, there are no seats available and you can therefore not buy a ticket."}
         next: calcPrice
     - calcPrice:
         call: http.post
@@ -23,17 +22,18 @@ main:
           url: https://calc-ticket-price-vyyo777p6q-uc.a.run.app
           body:
             route_id: ${args.route_id}
-            distance: 10
             time: ${args.time}
         result: GetPriceResult
         next: createTicket
     - createTicket:
         call: http.post
         args:
-          url: http://35.222.91.84:5000/tickets
+          url: http://35.223.193.139:5000/tickets
+          headers:
+            Authorization: ${"Bearer "+ args.auth_token}
           body:
-            price: ${GetPriceResult.body}
-            account_eamil: ${args.account_email}
+            route_id: ${args.route_id}
+            price: ${GetPriceResult.body.total}
         result: GetCreateTicketResult
         next: returnOutput
     - returnOutput:
