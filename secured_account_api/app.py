@@ -83,7 +83,7 @@ def get_tickets():
     }
     return make_response(jsonify(responseObject)), 401
 
-@app.route('/accounts',methods=['POST'])
+@app.route('/accounts',methods=['DELETE'])
 def delete_account():
   status_code, data = check_if_authorize(request)
   if status_code == 200:
