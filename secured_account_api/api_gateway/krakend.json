@@ -15,6 +15,13 @@
       "extra_config": {
         "proxy": {
           "sequential": true
+        },
+        "qos/ratelimit/router": {
+          "max_rate": 3,
+          "client_max_rate": 0,
+          "strategy": "ip",
+          "capacity": 0,
+          "client_capacity": 0
         }
       },
       "backend": [
@@ -28,7 +35,7 @@
           "disable_host_sanitize": false
         },
         {
-          "url_pattern": "/accounts",
+          "url_pattern": "/verify",
           "encoding": "json",
           "method": "GET",
           "host": [
@@ -37,6 +44,7 @@
           "disable_host_sanitize": false
         }
       ]
+      
     }
   ]
 }
