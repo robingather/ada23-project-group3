@@ -34,7 +34,7 @@ def check_if_authorize(req):
       auth_url = os.environ['AUTH_URL']
   else:
       auth_url = 'http://secure_api:5000/verify'
-  result = requests.post(auth_url,
+  result = requests.get(auth_url,
                           headers={'Content-Type': 'application/json',
                                   'Authorization': auth_header})
   # print("RES",result)
