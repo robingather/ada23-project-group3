@@ -77,14 +77,14 @@ def get_tickets():
     # req_data = request.get_json()
     return Ticket.getAll(data)
 
-if __name__ == '__main__':
-    app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
-
-@app.route('/account',methods=['DELETE'])
+@app.route('/accounts',methods=['DELETE'])
 def delete_account():
   status_code, data = check_if_authorize(request)
   if status_code == 200:
     return Account.delete(data)
+
+if __name__ == '__main__':
+    app.run(port=int(os.environ.get("PORT", 5000)), host='0.0.0.0', debug=True)
 
 
 # TODO update account
