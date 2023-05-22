@@ -4,7 +4,7 @@ This function is used in the workflow orchestration to calculate the ticket pric
 The time is used to check whether the route starts during rush hour. If so, an additional on-peak fare is added to the total price.
 
 To deploy:
-- `gcloud functions deploy calc-ticket-price --gen2 --region=us-central1 --runtime python310 --entry-point=calc-ticket-price --trigger-http --allow-unauthenticated`
+- `gcloud functions deploy calc_ticket_price --runtime python310 --region=us-central1 --gen2 --entry-point=calc_ticket_price --trigger-http --env-vars-file .env.yaml --memory 2Gi --allow-unauthenticated`
 
 To use the function:
 - type: POST

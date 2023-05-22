@@ -1,0 +1,13 @@
+route_id,start_time,end_time,start_station,end_station,total_duration,total_distance,status,seat_availability
+8697fec8-090b-4575-8260-8b6b07f93dfa,09:06,09:33,Eindhoven Centraal,Den Bosch,27,23.01,on time,151
+47fa31d2-18e0-45c9-9f5d-70d09c468f3b,09:12,09:27,Den Bosch,Tilburg,15,19.15,on time,136
+e22ad9d4-f588-4731-a70e-383c760e9ed7,09:17,09:36,Eindhoven Centraal,Den Bosch,20,23.01,delayed +1,111
+f890bddc-7415-47d2-b20b-520aaa449f30,09:27,09:46,Eindhoven Centraal,Den Bosch,19,23.01,on time,103
+76543b8c-0b44-4b11-809f-04316a1a831a,09:33,09:48,Den Bosch,Tilburg,14,19.15,delayed +1,180
+4c593a93-5e0f-4b93-b266-a5716b07acb2,09:37,09:55,Eindhoven Centraal,Den Bosch,21,23.01,delayed +3,176
+09ab5baa-9bfd-47e4-b139-beaf5114e834,09:42,09:57,Den Bosch,Tilburg,13,19.15,delayed +2,76
+87f67080-d73f-4c86-8f88-15fbf7f5815a,09:47,10:06,Eindhoven Centraal,Den Bosch,21,23.01,delayed +4,22
+04f5e03a-3b88-42d7-bdb4-b52599454bb9,10:03,10:18,Den Bosch,Tilburg,15,19.15,on time,0
+9261f13a-5af2-4dd5-9f78-b53c3c019407,10:06,10:25,Eindhoven Centraal,Den Bosch,19,23.01,on time,151
+0e9329a2-58f0-4526-818d-ab1d3611cc29,10:12,10:27,Den Bosch,Tilburg,14,19.15,delayed +1,163
+d469098c-b56e-49e2-8e90-3c88c93a4c73,11:03,11:13,Boxtel,Den Bosch,10,9.5,delayed +7,98

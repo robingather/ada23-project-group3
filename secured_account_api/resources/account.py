@@ -125,7 +125,7 @@ class Account:
         if(req_data.get("last_name")):
           account.last_name = req_data.get("last_name")
         if(req_data.get("email_address")):
-          account.first_name = req_data.get("email_address")
+          account.email_address = req_data.get("email_address")
         if(req_data.get("user_type")):
           account.user_type = req_data.get("user_type")
         if(req_data.get("password")):
